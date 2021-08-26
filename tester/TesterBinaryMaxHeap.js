@@ -1,0 +1,24 @@
+var BinaryMaxHeap = require("../BinaryMaxHeap");
+
+let heap = new BinaryMaxHeap();
+let arr = [10, 20, 25, 6, 12, 15, 4, 16];
+heap.buildMaxHeap(arr);
+heap.toString();
+heap.remove(10);
+heap.toString();
+const first = [1,2,3,4,5,10];
+const second = [100,20,50,60];
+let heapFirst = new BinaryMaxHeap();
+let heapSecond = new BinaryMaxHeap();
+heapFirst.buildMaxHeap(first);
+heapSecond.buildMaxHeap(second);
+heap.extractMax();
+heap.toString();
+heap.replace(0);
+heap.toString();
+heap.insert(100);
+heap.toString();
+heap.insert(13);
+heap.toString();
+let merged = BinaryMaxHeap.merge(heapFirst,heapSecond);
+merged.toString();

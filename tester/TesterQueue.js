@@ -1,0 +1,20 @@
+var Queue = require('../Queue');
+
+let queue = new Queue();
+queue.addAll([1,2,3,4,5,6]);
+queue.toString();
+queue.clear();
+queue.toString();
+queue.offer(1);
+queue.offer(2);
+queue.offer(3);
+queue.offer(4);
+queue.offer(5);
+queue.toString();
+console.log(queue.contains(3));
+console.log(queue.contains(0));
+console.log(queue.size());
+queue.poll();
+queue.toString();
+queue.remove(3);
+queue.toString();
