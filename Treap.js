@@ -17,13 +17,10 @@ class TreapNode {
     }
 
     //Checks if the node is a leaf (has no children)
-    isLeaf(){ return this.left === null && this.right === null; }
-
-    //Checks if the node has at least one child
-    hasChild(){ return this.left !== null || this.right !== null;}
+    isLeaf(){ return !this.left && !this.right; }
 
     //Checks if the node has both children
-    hasChildren(){ return this.left !== null && this.right !== null; }
+    hasChildren(){ return this.left && this.right; }
 }
 
 class Treap {
@@ -56,39 +53,33 @@ class Treap {
 
     /**Recursive helper function that finds the correct position to insert the
      * key-priority pair.*/
-    insertNode(current, key, priority){
-        if(current === null){
-            let newNode = new TreapNode(key,priority);
+    insertNode(node, key, priority){
+        if(node === null){
             this.size++;
-            return newNode;
+            return new TreapNode(key,priority);;
         }
 
-        if(key > current.key){
-            let rightChild = this.insertNode(current.right, key, priority);
-            current.right = rightChild;
-            rightChild.parent = current;
+        if(key < node.key){
+            let leftChild = this.insertNode(node.left, key, priority);
+            node.left = leftChild;
+            leftChild.parent = node;
+
+            if(node.left && node.left.priority > node.priority){
+                node = this.rotateRight(node);
+            }
+        } else if(key > node.key){
+            let rightChild = this.insertNode(node.right, key, priority);
+            node.right = rightChild;
+            rightChild.parent = node;
             
-        } else if(key < current.key){
-            let leftChild = this.insertNode(current.left, key, priority);
-            current.left = leftChild;
-            leftChild.parent = current;
-        } else if(key === current.key){
+            if(node.right && node.right.priority > node.priority){
+                node = this.rotateLeft(node);
+            }
+        } else if(key === node.key){
             throw new Error("Treap cannot add a duplicate",key);
         }
-        
-        let bubbleUp = this.bubbleUp(current);
-        if(bubbleUp) return bubbleUp;
-        return current;
-    }
 
-    bubbleUp(node){
-        if(!node) return node;
-        if(node.left && node.left.priority > node.priority){
-            node = this.rotateRight(node);
-        } else if(node.right && node.right.priority > node.priority){
-            node = this.rotateLeft(node);
-        }
-        return node; 
+        return node;
     }
 
     //Removes the matching key-priority pair from the Treap
