@@ -1,4 +1,4 @@
-**# JS-Data-Structures**
+# JS-Data-Structures
 This note includes a list of the included Data Structures that have been implemented in JavaScript.
 - Stack
 - Queue
